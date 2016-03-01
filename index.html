@@ -8,6 +8,7 @@
 <h1>Évolution du statut des ventes sur les 100 premiers jours</h1>
 <div class="custom-chart"></div>
 <script src="d3.js"></script>
+<script src="date-selection-area.js"></script>
 <script src="helpers.js"></script>
 <script src="script.js"></script>
 
@@ -15,14 +16,26 @@
 <link rel="stylesheet" href="style.css"/>
 <script type="template" id="custom-chart-template">
     <svg>
-        <g class="content"></g>
+        <g class="content">
+            <g class="date-selection-area">
+                <rect class="grid-background"></rect>
+                <g class="x grid"></g>
+                <g class="x axis"></g>
+                <g class="brush"></g>
+            </g>
+            <g class="chart-area" transform="translate(0,60)">
+                <g class="our-super-chart"></g>
+                <g class="x axis"></g>
+            </g>
+        </g>
     </svg>
 </script>
 
 <script>
     d3.select('.custom-chart').customChart({
         margin: { top: 10, right: 10, bottom: 20, left: 10, fullWidth: 960, fullHeight: 600 },
-        dateSelection: [ new Date(2015, 7, 1), new Date(2015, 8, 1) ]
+        dateSelection: [ new Date(2015, 7, 1), new Date(2015, 8, 1) ],
+        brushHeight: 30
     });
 </script>
 </body>
