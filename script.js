@@ -4,38 +4,41 @@ window.d3.selection.prototype.customChart = function ( params ) {
     var svgContent = initializeSvg(this, params.margin, width, height);
 
     initializeDateSelectionArea(svgContent.select('.date-selection-area'), params, width, height, function ( dateRange ) {
-        getJson(dateRange).then(rerenderChart);
+        // TODO: add debounce in here
+        getJson(dateRange).then(rerenderChart).then(function () {
+            window.setTimeout(function () {
+                getJson(dateRange).then(rerenderChart);
+            }, 1000)
+        });
     });
+
+    var yRange = d3.scale.linear().range([ height, 0 ]);
+    var xRange = d3.scale.ordinal().rangeRoundBands([ 0, width ], 0.08);
+    var xAxis = d3.svg.axis().ticks(10).orient('bottom');
+
+    function values( d ) {return d.values;}
 
     function rerenderChart( chartData ) {
         var chartArea = svgContent.select('.chart-area');
-        var days = chartData[ 0 ].values.length;
-        var stackedDatas = d3.layout.stack().values(function ( d ) {
-            return d.values;
-        })(chartData);
+        var layers = d3.layout.stack().values(values)(chartData);
+        yRange.domain([ 0, d3.max(layers, function ( stackedDatas ) {
+            return d3.max(stackedDatas.values, function ( d ) { return d.y0 + d.y});
+        }) ]);
+        xRange.domain(d3.range(chartData[ 0 ].values.length));
 
-        var yStackMax = d3.max(stackedDatas, function ( stackedDatas ) {
-            return d3.max(stackedDatas.values, function ( d ) {
-                return d.y0 + d.y;
-            });
-        });
+        function y( d ) {return yRange(d.y0 + d.y);}
 
-        var xRange = d3.scale.ordinal().domain(d3.range(days)).rangeRoundBands([ 0, width ], 0.08);
-        var yRange = d3.scale.linear().domain([ 0, yStackMax ]).range([ height, 0 ]);
-        yRange.domain([ 0, yStackMax ]);
+        function h( d ) {return yRange(d.y0) - yRange(d.y0 + d.y);}
 
-        var xAxis = d3.svg.axis().ticks(20).scale(xRange).orient('bottom');
-        chartArea.select('.x.axis').attr('transform', 'translate(0,' + (height - 70) + ')').call(xAxis);
-
-        var layer = chartArea.select('.our-super-chart').selectAll('.layer').data(stackedDatas).enter().append('g').attr('class', 'layer').style('fill', pickColor);
-        var rect = layer.selectAll('rect').data(function ( d ) {
-            return d.values;
-        }).enter().append('rect').attr({
-            x: function ( d ) {return xRange(d.x)},
+        chartArea.select('.our-super-chart').superEnter('g', layers, {
+            fill: pickColor
+        }).superEnter('rect', values, {
             width: xRange.rangeBand(),
-            y: function ( d ) {return yRange(d.y0 + d.y);},
-            height: function ( d ) {return yRange(d.y0) - yRange(d.y0 + d.y);}
-        });
+            x: function ( d ) {return xRange(d.x)},
+            y: y,
+            height: h
+        }).transition().duration(500).attr({ y: y, height: h });
+
+        chartArea.select('.x.axis').attr('transform', 'translate(0,' + (height - 60) + ')').call(xAxis.scale(xRange));
     }
 };
-

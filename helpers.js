@@ -5,14 +5,24 @@ function initializeSvg( selection, margin, width, height ) {
     }).select('.content').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 }
 
+var called = false;
+var stubUrl = '2015-08-01to2015-08-03.json';
 function getJson() {
     function dateToString( dt ) {
         return '' + (dt.getFullYear()) + '-' + (dt.getMonth() + 1) + '-' + (dt.getDate())
     }
+
     var url = false && '/api/data/salesstatus/' + dateToString(params.dateSelection[ 0 ]) + '/' + dateToString(params.dateSelection[ 1 ]);
     return new Promise(function ( success ) {
-        d3.json(url || '2015-08-01to2015-08-03.json').get(function ( error, json ) {
+
+        if ( called ) {
+            stubUrl = '2015-08-01to2015-08-03-2.json';
+        }
+        d3.json(url || stubUrl).get(function ( error, json ) {
             success(json);
+            if ( !called ) {
+                called = true;
+            }
         });
     })
 }
