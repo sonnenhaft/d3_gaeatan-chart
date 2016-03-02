@@ -27,7 +27,8 @@ function getJson() {
     })
 }
 
-function pickColor( ignored, colorIndex ) {
+dataUi = {};
+dataUi.pickColor = function ( ignored, colorIndex ) {
     return [
             '#C4DAF1', //nouveau
             '#9FCBE1', // prise de contact
@@ -41,4 +42,4 @@ function pickColor( ignored, colorIndex ) {
             '#E0A99E', // 'Dossier retourné',
             '#D77C6E' // 'Post traitement'
         ][ colorIndex ] || '#ddd';
-}
+};

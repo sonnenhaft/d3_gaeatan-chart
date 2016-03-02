@@ -1,27 +1,24 @@
 function initializeDateSelectionArea( svgContent, params, width, height, callback ) {
-    var today = new Date();
-    today.setHours(0, 0, 0, 0);
+    var todaysMidnight = new Date();
+    todaysMidnight.setHours(0, 0, 0, 0);
 
-    var xDay = d3.time.scale().domain([ new Date(2015, 7, 1), today - 1 ]).range([ 0, width ]);
+    var xDayScale = d3.time.scale().domain([ new Date(2015, 7, 1), todaysMidnight - 1 ]).range([ 0, width ]);
 
     svgContent.select('.grid-background').attr({ width: width, height: params.brushHeight });
 
-    svgContent.select('.x.grid').attr('transform', 'translate(0,' + params.brushHeight + ')').call(d3.svg.axis()
-        .scale(xDay)
-        .orient('bottom')
-        .ticks(d3.time.months, 1)
+    function getAxis() {
+        return d3.svg.axis().orient('bottom').ticks(d3.time.months, 1).tickPadding(0).scale(xDayScale);
+    }
+
+    svgContent.select('.x.grid').attr('transform', 'translate(0,' + params.brushHeight + ')').call(getAxis()
         .tickSize(-height)
-        .tickFormat(''))
-        .selectAll('.tick').classed('minor', function ( d ) {return d.getHours();});
+        .tickFormat('')
+    ).selectAll('.tick').classed('minor', function ( d ) {return d.getHours();});
 
-    svgContent.select('.x.axis').attr('transform', 'translate(0,' + params.brushHeight + ')').call(d3.svg.axis()
-        .scale(xDay)
-        .orient('bottom')
-        .ticks(d3.time.months, 1)
-        .tickPadding(0))
-        .selectAll('text').attr('x', 6).style('text-anchor', null);
+    svgContent.select('.x.axis').attr('transform', 'translate(0,' + params.brushHeight + ')').call(getAxis())
+        .selectAll('text').attr('x', 6).style('text-anchor', 'start');
 
-    var brushFn = d3.svg.brush().x(xDay).extent(params.dateSelection).on('brush', function brushed() {
+    var brushFn = d3.svg.brush().x(xDayScale).extent(params.dateSelection).on('brush', function brushed() {
         var extent0 = brushFn.extent();
         var extent1;
 

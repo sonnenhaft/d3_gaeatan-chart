@@ -27,7 +27,7 @@ window.d3.selection.prototype.customChart = function ( params ) {
         var xMax = chartData[ 0 ].values.length;
         var range = d3.range(xMax);
         var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1).domain(range);
-        chartArea.select('.our-super-chart').superEnter('g', layers, { fill: pickColor }).superEnter('rect', values, {
+        chartArea.select('.our-super-chart').superEnter('g', layers, { fill: dataUi.pickColor }).superEnter('rect', values, {
             width: xScale.rangeBand(),
             x: function ( d, i ) { return xScale(i);},
             y: y,
