@@ -40,8 +40,8 @@ window.d3.selection.prototype.customChart = function ( params ) {
             mouseover: function ( d ) {
                 d3.select(this).attr({ 'stroke-width': 1 });
                 tooltip.style({
-                    left: d3.event.pageX  + 'px',
-                    top: d3.event.pageY  + 'px'
+                    left: d3.event.pageX + 10 + 'px',
+                    top: d3.event.pageY - 50  + 'px'
                 }).transition().duration(100).style({ opacity: 1 });
                 tooltip.select('.number').text(d.y);
                 tooltip.select('.max').text(yMax);
