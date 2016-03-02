@@ -5,38 +5,64 @@
     <title>Chart</title>
 </head>
 <body>
-<h1>Évolution du statut des ventes sur les 100 premiers jours</h1>
-<div class="custom-chart"></div>
-<script src="libs/d3.js"></script>
-<script src="src/initialize-svg.js"></script>
-<script src="src/data-ui-helpers/data-ui.pick-color.js"></script>
-<script src="src/date-selection-area.js"></script>
-<script src="src/d3-helpers/d3.bind-data.js"></script>
-<script src="src/d3-helpers/d3.simple-thorttle.js"></script>
-<script src="src/chart-area.js"></script>
+<div class="app-content">
+    <h1>Évolution du statut des ventes sur les 100 premiers jours</h1>
+    <div class="custom-chart"></div>
+    <!--<script src="libs/d3.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+    <script src="src/initialize-svg.js"></script>
+    <script src="src/data-ui-helpers/data-ui.pick-color.js"></script>
+    <script src="src/date-selection-area.js"></script>
+    <script src="src/d3-helpers/d3.bind-data.js"></script>
+    <script src="src/d3-helpers/d3.simple-thorttle.js"></script>
+    <script src="src/chart-area.js"></script>
 
-<link rel="stylesheet" href="src/style.css"/>
-<script type="template" id="custom-chart-template">
-    <svg>
-        <g class="content">
-            <g class="date-selection-area">
-                <rect class="grid-background"></rect>
-                <g class="x grid"></g>
-                <g class="x axis"></g>
-                <g class="brush"></g>
+    <link rel="stylesheet" href="src/style.css"/>
+    <script type="template" id="custom-chart-template">
+        <svg>
+            <g class="content">
+                <g class="date-selection-area">
+                    <rect class="grid-background"></rect>
+                    <g class="x grid"></g>
+                    <g class="x axis"></g>
+                    <g class="brush"></g>
+                </g>
+                <g class="chart-area" transform="translate(0,60)">
+                    <g class="our-super-chart"></g>
+                    <g class="x axis"></g>
+                </g>
             </g>
-            <g class="chart-area" transform="translate(0,60)">
-                <g class="our-super-chart"></g>
-                <g class="x axis"></g>
-            </g>
-        </g>
-    </svg>
-</script>
+        </svg>
+    </script>
 
-<div id="tooltip">
-    <div>Prise de contract</div>
-    <div><span class="number">N/A</span>/<span class="max">N/A</span></div>
-    <div><span class="percent">N/A</span>%</div>
+    <div id="tooltip">
+        <div>Prise de contract</div>
+        <div><span class="number">N/A</span>/<span class="max">N/A</span></div>
+        <div><span class="percent">N/A</span>%</div>
+    </div>
+    <h3>Files with status "Prise de contact" after 25 days"</h3>
+    <table>
+        <tr style="background-color: #CCCCCC">
+            <td>Creation</td>
+            <td>Name</td>
+        </tr>
+        <tr style="background-color: #FFFFFF ">
+            <td>2015-8-7 15h32</td>
+            <td>Name 1</td>
+        </tr>
+        <tr style="background-color: #ECECEC ">
+            <td>2015-8-7 15h37</td>
+            <td>Name 2</td>
+        </tr>
+        <tr style="background-color: #FFFFFF ">
+            <td>2015-8-7 15h38</td>
+            <td>Name 3</td>
+        </tr>
+        <tr style="background-color: #ECECEC ">
+            <td>...</td>
+            <td>....</td>
+        </tr>
+    </table>
 </div>
 
 <script>
@@ -46,6 +72,5 @@
         brushHeight: 30
     });
 </script>
-<div>hello kitty</div>
 </body>
 </html>

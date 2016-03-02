@@ -1,6 +1,8 @@
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.app-content {
     margin: auto;
     position: relative;
     width: 960px;
@@ -63,7 +65,7 @@ form {
 }
 
 div#tooltip {
-    position: absolute;
+    position: fixed;
     text-align: center;
     width: 60px;
     padding: 2px;
@@ -74,4 +76,12 @@ div#tooltip {
     border-radius: 8px;
     pointer-events: none;
     opacity: 0;
+}
+
+table {
+    border-spacing: 0;
+}
+table td {
+    border: 1px solid #000;
+    padding: 0 10px;
 }
