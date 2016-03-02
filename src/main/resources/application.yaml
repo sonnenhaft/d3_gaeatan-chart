@@ -1,0 +1,64 @@
+debug: true
+
+spring:
+  aop:
+    proxy-target-class: true
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://authserver:9999/uaa/oauth/token
+      userAuthorizationUri: https://authserver.moncoachfinance.com/uaa/oauth/authorize
+      clientId: docs
+      clientSecret: docssecret
+    resource:
+      userInfoUri: http://authserver:9999/uaa/user
+
+
+zuul:
+  routes:
+    user:
+      path: /api/users/**
+      url: http://users-api:8080/api/users
+    resource:
+      path: /api/**
+      url: http://docs-api:8080/api
+
+
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
+
+---
+spring:
+    profiles: dev
+
+
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://localhost:9999/uaa/oauth/token
+      userAuthorizationUri: http://localhost:9999/uaa/oauth/authorize
+      clientId: docs
+      clientSecret: docssecret
+    resource:
+      userInfoUri: http://localhost:9999/uaa/user
+
+
+zuul:
+  routes:
+    user:
+      path: /api/user/**
+      url: http://localhost:8081/api/user
+    resource:
+      path: /api/data/**
+      url: http://localhost:9001/api/data
+
+
+
+logging:
+  level:
+#    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    com.netflix: TRACE
