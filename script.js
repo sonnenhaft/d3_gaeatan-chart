@@ -7,33 +7,34 @@ window.d3.selection.prototype.customChart = function ( params ) {
         getJson(dateRange).then(rerenderChart);
     }, 1000));
 
-    var yRange = d3.scale.linear().range([ height, 0 ]);
-    var xRange = d3.scale.ordinal().rangeRoundBands([ 0, width ], 0.08);
-    var xAxis = d3.svg.axis().ticks(10).orient('bottom');
+    var yScale = d3.scale.linear().range([ height - 60, 0 ]);
+
+    function y( d ) {return yScale(d.y0 + d.y);}
+
+    function h( d ) {return yScale(d.y0) - yScale(d.y0 + d.y);}
 
     function values( d ) {return d.values;}
+
+    var bottomAxis = d3.svg.axis().orient('bottom').tickSize(10, 0);
 
     function rerenderChart( chartData ) {
         var chartArea = svgContent.select('.chart-area');
         var layers = d3.layout.stack().values(values)(chartData);
-        yRange.domain([ 0, d3.max(layers, function ( stackedDatas ) {
-            return d3.max(stackedDatas.values, function ( d ) { return d.y0 + d.y});
+        yScale.domain([ 0, d3.max(layers, function ( d ) {
+            return d3.max(values(d), function ( d ) { return d.y0 + d.y});
         }) ]);
-        xRange.domain(d3.range(chartData[ 0 ].values.length));
 
-        function y( d ) {return yRange(d.y0 + d.y);}
-
-        function h( d ) {return yRange(d.y0) - yRange(d.y0 + d.y);}
-
-        chartArea.select('.our-super-chart').superEnter('g', layers, {
-            fill: pickColor
-        }).superEnter('rect', values, {
-            width: xRange.rangeBand(),
-            x: function ( d ) {return xRange(d.x)},
+        var xMax = chartData[ 0 ].values.length;
+        var range = d3.range(xMax);
+        var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1).domain(range);
+        chartArea.select('.our-super-chart').superEnter('g', layers, { fill: pickColor }).superEnter('rect', values, {
+            width: xScale.rangeBand(),
+            x: function ( d, i ) { return xScale(i);},
             y: y,
             height: h
         }).transition().duration(500).attr({ y: y, height: h });
 
-        chartArea.select('.x.axis').attr('transform', 'translate(0,' + (height - 60) + ')').call(xAxis.scale(xRange));
+        bottomAxis.tickValues(d3.range(0, xMax, d3.round(xMax / 4))).scale(xScale);
+        chartArea.select('.x.axis').attr('transform', 'translate(' + 0 + ',' + (height - 57) + ')').call(bottomAxis);
     }
 };

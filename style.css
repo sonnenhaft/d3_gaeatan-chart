@@ -58,3 +58,6 @@ form {
     shape-rendering: crispEdges;
 }
 
+.chart-area .x.axis text {
+    font: 15px sans-serif;
+}
