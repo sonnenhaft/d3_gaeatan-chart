@@ -3,14 +3,9 @@ window.d3.selection.prototype.customChart = function ( params ) {
     var height = params.margin.fullHeight - params.margin.top - params.margin.bottom;
     var svgContent = initializeSvg(this, params.margin, width, height);
 
-    initializeDateSelectionArea(svgContent.select('.date-selection-area'), params, width, height, function ( dateRange ) {
-        // TODO: add debounce in here
-        getJson(dateRange).then(rerenderChart).then(function () {
-            window.setTimeout(function () {
-                getJson(dateRange).then(rerenderChart);
-            }, 1000)
-        });
-    });
+    initializeDateSelectionArea(svgContent.select('.date-selection-area'), params, width, height, simpleThrottle(function ( dateRange ) {
+        getJson(dateRange).then(rerenderChart);
+    }, 1000));
 
     var yRange = d3.scale.linear().range([ height, 0 ]);
     var xRange = d3.scale.ordinal().rangeRoundBands([ 0, width ], 0.08);
