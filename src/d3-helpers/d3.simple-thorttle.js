@@ -1,4 +1,4 @@
-function simpleThrottle( fn, restPeriod ) {
+d3.simpleThrottle = function ( fn, restPeriod ) {
     var free = true;
     return function () {
         if ( free ) {
@@ -9,4 +9,4 @@ function simpleThrottle( fn, restPeriod ) {
             }, restPeriod)
         }
     }
-}
+};

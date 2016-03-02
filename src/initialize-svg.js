@@ -13,26 +13,9 @@ function getJson() {
 
     var url = false && '/api/data/salesstatus/' + dateToString(params.dateSelection[ 0 ]) + '/' + dateToString(params.dateSelection[ 1 ]);
     return new Promise(function ( success ) {
-        d3.json(called ? '2015-08-01to2015-08-03-2.json' : '2015-08-01to2015-08-03.json').get(function ( error, json ) {
+        d3.json(called ? '/stubs/2015-08-01to2015-08-03-2.json' : '/stubs/2015-08-01to2015-08-03.json').get(function ( error, json ) {
             success(json);
             called = !called;
         });
     })
 }
-
-dataUi = {};
-dataUi.pickColor = function ( ignored, colorIndex ) {
-    return [
-            '#C4DAF1', //nouveau
-            '#9FCBE1', // prise de contact
-            '#F3F1D1', // Pas de contact
-            '#F5EFB6', // Bascule CMU
-            '#F3E765', // Vente annulée
-            '#D4E8CE', // En cours
-            '#DACFE8', // Terminée
-            '#BFA2E3', // À facturer
-            '#A06CE3', // Payé
-            '#E0A99E', // 'Dossier retourné',
-            '#D77C6E' // 'Post traitement'
-        ][ colorIndex ] || '#ddd';
-};

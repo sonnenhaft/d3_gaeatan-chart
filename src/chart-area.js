@@ -3,7 +3,7 @@ window.d3.selection.prototype.customChart = function ( params ) {
     var height = params.margin.fullHeight - params.margin.top - params.margin.bottom;
     var svgContent = initializeSvg(this, params.margin, width, height);
 
-    initializeDateSelectionArea(svgContent.select('.date-selection-area'), params, width, height, simpleThrottle(function ( dateRange ) {
+    initializeDateSelectionArea(svgContent.select('.date-selection-area'), params, width, height, d3.simpleThrottle(function ( dateRange ) {
         getJson(dateRange).then(rerenderChart);
     }, 1000));
 
@@ -29,7 +29,7 @@ window.d3.selection.prototype.customChart = function ( params ) {
         var xMax = chartData[ 0 ].values.length;
         var range = d3.range(xMax);
         var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1).domain(range);
-        chartArea.select('.our-super-chart').bindData('g', layers, { fill: dataUi.pickColor }).bindData('rect', values, {
+        chartArea.select('.our-super-chart').bindData('g', layers, { fill: dataUI.pickColor }).bindData('rect', values, {
             width: xScale.rangeBand(),
             x: function ( d, i ) { return xScale(i);},
             y: y,
