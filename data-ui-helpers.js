@@ -6,7 +6,6 @@ function initializeSvg( selection, margin, width, height ) {
 }
 
 var called = false;
-var stubUrl = '2015-08-01to2015-08-03.json';
 function getJson() {
     function dateToString( dt ) {
         return '' + (dt.getFullYear()) + '-' + (dt.getMonth() + 1) + '-' + (dt.getDate())
@@ -14,15 +13,9 @@ function getJson() {
 
     var url = false && '/api/data/salesstatus/' + dateToString(params.dateSelection[ 0 ]) + '/' + dateToString(params.dateSelection[ 1 ]);
     return new Promise(function ( success ) {
-
-        if ( called ) {
-            stubUrl = '2015-08-01to2015-08-03-2.json';
-        }
-        d3.json(url || stubUrl).get(function ( error, json ) {
+        d3.json(called ? '2015-08-01to2015-08-03-2.json' : '2015-08-01to2015-08-03.json').get(function ( error, json ) {
             success(json);
-            if ( !called ) {
-                called = true;
-            }
+            called = !called;
         });
     })
 }

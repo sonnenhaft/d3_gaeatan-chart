@@ -8,11 +8,11 @@
 <h1>Évolution du statut des ventes sur les 100 premiers jours</h1>
 <div class="custom-chart"></div>
 <script src="d3.js"></script>
-<script src="helpers.js"></script>
+<script src="data-ui-helpers.js"></script>
 <script src="date-selection-area.js"></script>
-<script src="super-enter.js"></script>
+<script src="d3.bind-data.js"></script>
 <script src="simple-thorttle.js"></script>
-<script src="script.js"></script>
+<script src="chart-area.js"></script>
 
 
 <link rel="stylesheet" href="style.css"/>
@@ -32,6 +32,12 @@
         </g>
     </svg>
 </script>
+
+<div id="tooltip">
+    <div>Prise de contract</div>
+    <div><span class="number">N/A</span>/<span class="max">N/A</span></div>
+    <div><span class="percent">N/A</span>%</div>
+</div>
 
 <script>
     d3.select('.custom-chart').customChart({
