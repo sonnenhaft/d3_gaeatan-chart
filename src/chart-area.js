@@ -28,7 +28,7 @@ window.d3.selection.prototype.customChart = function ( params ) {
         var tooltip = d3.select('#tooltip');
         var xMax = chartData[ 0 ].values.length;
         var range = d3.range(xMax);
-        var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1).domain(range);
+        var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1, 0).domain(range);
         chartArea.select('.our-super-chart').bindData('g', layers, { fill: dataUI.pickColor }).bindData('rect', values, {
             width: xScale.rangeBand(),
             x: function ( d, i ) { return xScale(i);},
@@ -51,6 +51,9 @@ window.d3.selection.prototype.customChart = function ( params ) {
                 d3.select(this).attr({ 'stroke-width': 0 });
                 tooltip.transition().duration(500).style('opacity', 0);
             }
+        }).attr({
+            width: xScale.rangeBand(),
+            x: function ( d, i ) { return xScale(i);}
         }).transition().duration(500).attr({ y: y, height: h });
 
         bottomAxis.tickValues(d3.range(0, xMax, d3.round(xMax / 4))).scale(xScale);
