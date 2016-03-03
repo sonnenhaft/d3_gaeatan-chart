@@ -1,4 +1,4 @@
-/*TODO: split and add namespaces*/
+ /*TODO: split and add namespaces*/
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -32,6 +32,13 @@ form {
 .axis path {
     display: none;
 }
+.x.grid .tick:first-of-type {
+    display: none;
+}
+
+ .x.grid path {
+    display: none;
+}
 
 .axis line {
     fill: none;
@@ -41,6 +48,7 @@ form {
 
 .grid-background {
     fill: #ddd;
+    x: -0.5;
 }
 
 .grid line,

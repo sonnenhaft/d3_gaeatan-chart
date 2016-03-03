@@ -5,9 +5,9 @@
     });
 
     var called = false;
-    d3.select('#datesBrush').datesBrush({
+    d3.select('#brushDatePicker').brushDatePicker({
         margin: {
-            top: 5, right: 40, bottom: 0, left: 10,
+            top: 0, right: 40, bottom: 0, left: 10,
             fullWidth: 960, fullHeight: 50
         },
         dateSelection: [ new Date(2015, 7, 1), new Date(2015, 8, 1) ],

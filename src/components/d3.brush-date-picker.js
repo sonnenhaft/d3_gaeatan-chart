@@ -1,4 +1,4 @@
-window.d3.selection.prototype.datesBrush = (function () {
+window.d3.selection.prototype.brushDatePicker = (function () {
     var prevDate2;
 
     function getUpdatedRangeFromExtent( currentDateExtent ) {
@@ -22,6 +22,8 @@ window.d3.selection.prototype.datesBrush = (function () {
     }
 
     function initDom() {
+        // TODO: if component will be reused, create a remove method to clean $$ fields
+        // to prevent memory leaks
         var content = this.append('g').attr({ 'class': 'content' });
         this.$$content = content;
         this.$$backgroundBlock = content.append('rect').attr({ 'class': 'grid-background' });
