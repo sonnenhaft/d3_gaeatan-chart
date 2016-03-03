@@ -12,7 +12,7 @@
         },
         dateSelection: [ new Date(2015, 7, 1), new Date(2015, 8, 1) ],
         brushHeight: 30,
-        dateUpdated: d3.simpleThrottle(function ( dateRange ) {
+        dateUpdated: d3.simpleDebounce(function ( dateRange ) {
             //function dateToString( dt ) {
             //     return '' + (dt.getFullYear()) + '-' + (dt.getMonth() + 1) + '-' + (dt.getDate())
             // }
@@ -26,6 +26,6 @@
                 reRenderChart(json);
                 called = !called;
             });
-        }, 1000)
+        }, 100)
     });
 })(window.d3);

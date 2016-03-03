@@ -11,7 +11,6 @@ window.d3.selection.prototype.customStackedChart = function ( margin ) {
         height: this.height + this.margin.top + this.margin.bottom
     });
     this.select('.content').attr({ transform: 'translate(' + this.margin.left + ',' + this.margin.top + ')' });
-    var svgContent = this;
 
     var yScale = d3.scale.linear().range([ height - 60, -60 ]);
 
@@ -23,6 +22,7 @@ window.d3.selection.prototype.customStackedChart = function ( margin ) {
 
     var bottomAxis = d3.svg.axis().orient('bottom').tickSize(10, 0);
 
+    var svgContent = this;
     return function ( chartData ) {
         var chartArea = svgContent.select('.chart-area');
         var layers = d3.layout.stack().values(values)(chartData);
