@@ -48,25 +48,27 @@ window.d3.selection.prototype.brushDatePicker = (function () {
         return d3.svg.axis().orient('bottom').ticks(d3.time.months, 1).tickPadding(0).scale(xDayScale);
     }
 
+    function transform( a, b ) { return { transform: 'translate(' + (a || 0) + ',' + (b || 0) + ')' };}
+
     function updateDom() {
         this.attr({
             width: this.width + this.margin.left + this.margin.right,
             height: this.height + this.margin.top + this.margin.bottom
         });
 
-        this.$$content.attr({ transform: 'translate(' + this.margin.left + ',' + this.margin.top + ')' });
+        this.$$content.attr(transform(this.margin.left, this.margin.top));
 
         var params = this.params;
 
         this.$$backgroundBlock.attr({ width: this.width, height: params.brushHeight });
 
         this.xDayScale.range([ 0, this.width ]);
-        this.$$xAxis.attr('transform', 'translate(0,' + params.brushHeight + ')').call(getAxis(this.xDayScale))
+        this.$$xAxis.attr(transform(0, params.brushHeight))
+            .call(getAxis(this.xDayScale))
             .selectAll('text').attr('x', 6).style('text-anchor', 'start');
-        this.$$xGrid.attr('transform', 'translate(0,' + params.brushHeight + ')').call(getAxis(this.xDayScale)
-            .tickSize(-this.height)
-            .tickFormat('')
-        ).selectAll('.tick').classed('minor', function ( date ) {return date.getHours();});
+        this.$$xGrid.attr(transform(0, params.brushHeight))
+            .call(getAxis(this.xDayScale).tickSize(-this.height).tickFormat(''))
+            .selectAll('.tick').classed('minor', function ( date ) {return date.getHours();});
 
         var brushFn = d3.svg.brush().x(this.xDayScale).extent(params.dateSelection).on('brush', function () {
             var dates = getUpdatedRangeFromExtent(brushFn.extent());

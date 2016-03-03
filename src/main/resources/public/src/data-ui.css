@@ -1,13 +1,4 @@
  /*TODO: split and add namespaces*/
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-.app-content {
-    margin: auto;
-    position: relative;
-    width: 960px;
-}
-
 text {
     font: 10px sans-serif;
 }
@@ -17,12 +8,6 @@ text {
     fill: none;
     stroke: #000;
     shape-rendering: crispEdges;
-}
-
-form {
-    position: absolute;
-    right: 10px;
-    top: 10px;
 }
 
 .axis text {
@@ -84,12 +69,4 @@ div#tooltip {
     border-radius: 8px;
     pointer-events: none;
     opacity: 0;
-}
-
-table {
-    border-spacing: 0;
-}
-table td {
-    border: 1px solid #000;
-    padding: 0 10px;
 }
