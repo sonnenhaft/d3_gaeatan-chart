@@ -17,6 +17,10 @@ text {
 .axis text {
     font: 11px sans-serif;
 }
+.selected {
+    stroke-width: 2px;
+    stroke: orange;
+}
 
 .axis path {
     display: none;

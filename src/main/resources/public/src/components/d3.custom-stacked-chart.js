@@ -55,6 +55,10 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
         }).on({
                 click: function ( values, valueIndex, layerIndex ) {
                     var layer = layers[ layerIndex ];
+                    if (selected) {
+                        selected.classed('selected', false);
+                    }
+                    selected = d3.select(this).classed('selected', true);
                     params.onSelected(layer, valueIndex, dateRange);
                 },
                 mouseover: function ( values, valueIndex, layerIndex ) {
