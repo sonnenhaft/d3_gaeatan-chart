@@ -24,6 +24,12 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
 
     var svgContent = this;
     var selected;
+    function cleanSelected() {
+        if (selected) {
+            selected.classed('selected', false);
+            selected = null;
+        }
+    }
     return function ( chartData, dateRange ) {
         var chartArea = svgContent.select('.chart-area');
         var layers = d3.layout.stack().values(values)(chartData);
@@ -43,8 +49,8 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
         var range = d3.range(xMax);
         var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1, 0).domain(range);
 
+        cleanSelected();
         var x = function ( ignored, i ) { return xScale(i);};
-        selected = null;
         chartArea.select('.our-super-chart').bindData('g', layers, { fill: dataUI.pickColor }).bindData('rect', values, {
             x: x,
             width: xScale.rangeBand(),
@@ -55,9 +61,7 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
         }).on({
                 click: function ( values, valueIndex, layerIndex ) {
                     var layer = layers[ layerIndex ];
-                    if (selected) {
-                        selected.classed('selected', false);
-                    }
+                    cleanSelected();
                     selected = d3.select(this).classed('selected', true);
                     params.onSelected(layer, valueIndex, dateRange, layerIndex);
                 },
