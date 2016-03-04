@@ -33,6 +33,12 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
         yScale.domain([ 0, yMax ]);
 
         var tooltip = d3.select('#tooltip').style('opacity', 0);
+        var setTooltipPos = function () {
+            return tooltip.style({
+                left: d3.event.clientX + 10 + 'px',
+                top: d3.event.clientY - 50 + 'px'
+            });
+        };
         var xMax = chartData[ 0 ].values.length;
         var range = d3.range(xMax);
         var xScale = d3.scale.ordinal().rangeBands([ 0, width ], 0.1, 0).domain(range);
@@ -53,16 +59,14 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
                 },
                 mouseover: function ( values, valueIndex, layerIndex ) {
                     d3.select(this).attr({ 'stroke-width': 1 });
-                    tooltip.style({
-                        left: d3.event.clientX + 10 + 'px',
-                        top: d3.event.clientY - 50 + 'px'
-                    }).transition().duration(100).style({ opacity: 1 });
+                    setTooltipPos().transition().duration(250).style({ opacity: 1 });
                     tooltip.select('.number').text(values.y);
                     tooltip.select('.max').text(yMax);
                     tooltip.select('.percent').text(d3.round(values.y / yMax * 100));
                     var layer = layers[ layerIndex ];
                     tooltip.select('.label').text(layer.label);
                 },
+                mousemove: setTooltipPos,
                 mouseout: function () {
                     d3.select(this).attr({ 'stroke-width': 0 });
                     tooltip.transition().duration(500).style('opacity', 0);
