@@ -59,7 +59,7 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
                         selected.classed('selected', false);
                     }
                     selected = d3.select(this).classed('selected', true);
-                    params.onSelected(layer, valueIndex, dateRange);
+                    params.onSelected(layer, valueIndex, dateRange, layerIndex);
                 },
                 mouseover: function ( values, valueIndex, layerIndex ) {
                     d3.select(this).attr({ 'stroke-width': 1 });
