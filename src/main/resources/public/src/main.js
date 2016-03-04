@@ -49,11 +49,12 @@
             var format = d3.time.format('%Y-%m-%d');
             d3.select('.start-date').text(format(dateRange[ 0 ]));
             d3.select('.end-date').text(format(dateRange[ 1 ]));
-            d3.selectAll('.start-date, .end-date').style('opacity', 0.5).transition().duration(500).style('opacity', 1);
+            d3.selectAll('.start-date, .end-date').style('opacity', 0.5);
             d3.json(dataSelected ? '/stubs/chart-data-2.json' : '/stubs/chart-data-1.json').get(function ( error, json ) {
                 reRenderChart(json, dateRange);
+                d3.selectAll('.start-date, .end-date').transition().duration(500).style('opacity', 1);
                 dataSelected = !dataSelected;
             });
-        }, 500, true)
+        }, 500, true) // initially was 500 in here, but looked ugly a bit
     });
 })(window.d3);
