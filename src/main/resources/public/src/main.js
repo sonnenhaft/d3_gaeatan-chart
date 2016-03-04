@@ -8,6 +8,8 @@
 
     var dateToString = function dateToString( dt ) {return '' + (dt.getFullYear()) + '-' + (dt.getMonth() + 1) + '-' + (dt.getDate());};
     var getApiUrl = function ( url, datesRange ) {return [ url, dateToString(datesRange[ 0 ]), dateToString(datesRange[ 1 ]) ].join('/');};
+    var createLink = function ( name, link ) {return link ? [ '<a href="', link, '">', name, '</a>' ].join('') : name;};
+    var firstArgumentFn = function ( d ) { return d; };
 
     var tableArea = d3.select('.table-area');
     var reRenderChart = d3.select('#custom-chart').customStackedChart({
@@ -21,16 +23,12 @@
             d3.json(isStubApi ? getStubUrl('stubs/sales') : [ getApiUrl('/api/data/sales', datesRange), layerIndex, valueIndex ].join('/')).get(function ( e, data ) {
                 var format = d3.time.format('%Y-%-m-%-d %Hh%M');
                 var trs = tableArea.select('table tbody').bindData('tr', data.map(function ( d ) {
-                    return [ format(new Date(d.creation)), d.name ];
+                    return [ format(new Date(d.creation)), createLink(d.name, d.link) ];
                 }));
                 trs.style('visibility', 'hidden').transition()
                     .delay(function ( d, i ) {return i * 100; })
                     .style('visibility', 'visible');
-                trs.bindData('td', function ( d ) {
-                    return d;
-                }).text(function ( d ) {
-                    return d;
-                });
+                trs.bindData('td', firstArgumentFn).html(firstArgumentFn);
                 tableArea.transition().duration(500).style('opacity', 1);
             });
         }
