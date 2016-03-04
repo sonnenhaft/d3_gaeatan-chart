@@ -1,10 +1,31 @@
 (function ( d3 ) {
+
+    var tableArea = d3.select('.table-area');
+
+    var stubSelected = false;
     var reRenderChart = d3.select('#custom-chart').customStackedChart({
         top: 0, right: 40, bottom: 30, left: 10,
-        fullWidth: 960, fullHeight: 600
+        fullWidth: 960, fullHeight: 600,
+        onSelected: function ( layer, valueIndex ) {
+            stubSelected = !stubSelected;
+            d3.json(stubSelected ? 'stubs/sales-1.json' : 'stubs/sales-2.json').get(function ( e, data ) {
+                ///api/data/sales/?from=2015-08-07&to=2015-09-07&status=1&day=24
+                tableArea.select('.table-label').text(layer.label);
+                tableArea.select('.table-days').text((valueIndex + 1) + ' day' + (valueIndex ? '' : ''));
+
+                var format = d3.time.format('%Y-%-m-%-d %Hh%M');
+                tableArea.style('opacity', 1).select('table tbody').bindData('tr', data.map(function ( d ) {
+                    return [ format(new Date(d.creation)), d.name ];
+                })).bindData('td', function ( d ) {
+                    return d;
+                }).text(function ( d ) {
+                    return d;
+                });
+            });
+        }
     });
 
-    var called = false;
+    var dataSelected = false;
     d3.select('#brushDatePicker').brushDatePicker({
         margin: {
             top: 0, right: 40, bottom: 0, left: 10,
@@ -17,15 +38,15 @@
             //     return '' + (dt.getFullYear()) + '-' + (dt.getMonth() + 1) + '-' + (dt.getDate())
             // }
 
-            // var url = false && '/api/data/salesstatus/' + dateToString(params.dateSelection[ 0 ]) + '/' + dateToString(params.dateSelection[ 1 ]);
-
-            var format = d3.time.format("%Y-%m-%d");
+            // var url =  '/api/data/salesstatus/' + dateToString(dateRange[ 0 ]) + '/' + dateToString(dateRange[ 1 ]);
+            tableArea.style('opacity', 0);
+            var format = d3.time.format('%Y-%m-%d');
             d3.select('.start-date').text(format(dateRange[ 0 ]));
             d3.select('.end-date').text(format(dateRange[ 1 ]));
-            d3.json(called ? '/stubs/2015-08-01to2015-08-03-2.json' : '/stubs/2015-08-01to2015-08-03.json').get(function ( error, json ) {
+            d3.json(dataSelected ? '/stubs/chart-data-2.json' : '/stubs/chart-data-1.json').get(function ( error, json ) {
                 reRenderChart(json);
-                called = !called;
+                dataSelected = !dataSelected;
             });
-        }, 100)
+        }, 500)
     });
 })(window.d3);

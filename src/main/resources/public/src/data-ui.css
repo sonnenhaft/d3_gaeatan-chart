@@ -59,14 +59,14 @@ text {
 
 div#tooltip {
     position: fixed;
-    text-align: center;
-    width: 60px;
-    padding: 2px;
+    text-align: left;
+    min-width: 60px;
+    padding: 2px 6px;
     font: 12px sans-serif;
     background: #2D7CAC;
     color: #BED6E4;
     border: 0;
-    border-radius: 8px;
+    border-radius: 4px;
     pointer-events: none;
     opacity: 0;
 }
