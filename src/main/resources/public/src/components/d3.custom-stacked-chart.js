@@ -24,7 +24,7 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
 
     var svgContent = this;
     var selected;
-    return function ( chartData ) {
+    return function ( chartData, dateRange ) {
         var chartArea = svgContent.select('.chart-area');
         var layers = d3.layout.stack().values(values)(chartData);
         var yMax = d3.max(layers, function ( d ) {
@@ -49,7 +49,7 @@ window.d3.selection.prototype.customStackedChart = function ( params ) {
         }).on({
                 click: function ( values, valueIndex, layerIndex ) {
                     var layer = layers[ layerIndex ];
-                    params.onSelected(layer, valueIndex);
+                    params.onSelected(layer, valueIndex, dateRange);
                 },
                 mouseover: function ( values, valueIndex, layerIndex ) {
                     d3.select(this).attr({ 'stroke-width': 1 });

@@ -1,4 +1,8 @@
- /*TODO: split and add namespaces*/
+/*TODO: split and add namespaces*/
+h1 {
+    margin-left: 10px;
+}
+
 text {
     font: 10px sans-serif;
 }
@@ -17,11 +21,12 @@ text {
 .axis path {
     display: none;
 }
+
 .x.grid .tick:first-of-type {
     display: none;
 }
 
- .x.grid path {
+.x.grid path {
     display: none;
 }
 
