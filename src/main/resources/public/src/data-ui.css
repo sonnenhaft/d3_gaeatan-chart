@@ -1,11 +1,6 @@
-
-body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-.app-content {
-    margin: auto;
-    position: relative;
-    width: 960px;
+/*TODO: split and add namespaces*/
+h1 {
+    margin-left: 10px;
 }
 
 text {
@@ -19,17 +14,23 @@ text {
     shape-rendering: crispEdges;
 }
 
-form {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-}
-
 .axis text {
     font: 11px sans-serif;
 }
+.selected {
+    stroke-width: 2px;
+    stroke: orange;
+}
 
 .axis path {
+    display: none;
+}
+
+.x.grid .tick:first-of-type {
+    display: none;
+}
+
+.x.grid path {
     display: none;
 }
 
@@ -41,6 +42,7 @@ form {
 
 .grid-background {
     fill: #ddd;
+    x: -0.5;
 }
 
 .grid line,
@@ -66,22 +68,14 @@ form {
 
 div#tooltip {
     position: fixed;
-    text-align: center;
-    width: 60px;
-    padding: 2px;
+    text-align: left;
+    min-width: 60px;
+    padding: 2px 6px;
     font: 12px sans-serif;
     background: #2D7CAC;
     color: #BED6E4;
     border: 0;
-    border-radius: 8px;
+    border-radius: 4px;
     pointer-events: none;
     opacity: 0;
-}
-
-table {
-    border-spacing: 0;
-}
-table td {
-    border: 1px solid #000;
-    padding: 0 10px;
 }

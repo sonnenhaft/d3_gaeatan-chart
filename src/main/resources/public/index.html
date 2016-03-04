@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chart</title>
+</head>
+<body>
+<div class="app-content">
+    <h1>Évolution du 100 premiers jours <span class="start-date"></span> et <span class="end-date"></span></h1>
+    <script src="libs/d3.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>-->
+    <script src="src/helpers/data-ui.pick-color.js"></script>
+    <script src="src/helpers/d3.bind-data.js"></script>
+    <script src="src/helpers/d3.simple-debounce.js"></script>
+    <script src="src/components/d3.brush-date-picker.js"></script>
+    <script src="src/components/d3.custom-stacked-chart.js"></script>
+
+    <link rel="stylesheet" href="src/data-ui.css"/>
+    <link rel="stylesheet" href="src/main.css"/>
+    <link rel="stylesheet" href="src/table-area.css"/>
+    <svg id="brushDatePicker"></svg>
+    <svg id="custom-chart">
+        <g class="content">
+            <g class="chart-area" transform="translate(0,60)">
+                <g class="our-super-chart"></g>
+                <g class="x axis"></g>
+            </g>
+        </g>
+    </svg>
+
+    <div id="tooltip">
+        <div class="label"></div>
+        <div><span class="number"></span>/<span class="max"></span></div>
+        <div><span class="percent"></span>%</div>
+    </div>
+
+    <div class="table-area hidden">
+        <h3>
+            Files with status
+            "<span class="table-label">Prise de contact</span>"
+            after <span class="table-days"></span>
+        </h3>
+        <table>
+            <thead>
+            <tr>
+                <td>Creation</td>
+                <td>Name</td>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="src/main.js"></script>
+</body>
+</html>
