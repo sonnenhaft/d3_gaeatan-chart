@@ -1,0 +1,87 @@
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.app-content {
+    margin: auto;
+    position: relative;
+    width: 960px;
+}
+
+text {
+    font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+form {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.axis text {
+    font: 11px sans-serif;
+}
+
+.axis path {
+    display: none;
+}
+
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+.grid-background {
+    fill: #ddd;
+}
+
+.grid line,
+.grid path {
+    fill: none;
+    stroke: #fff;
+    shape-rendering: crispEdges;
+}
+
+.grid .minor.tick line {
+    stroke-opacity: .5;
+}
+
+.brush .extent {
+    stroke: #000;
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}
+
+.chart-area .x.axis text {
+    font: 15px sans-serif;
+}
+
+div#tooltip {
+    position: fixed;
+    text-align: center;
+    width: 60px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: #2D7CAC;
+    color: #BED6E4;
+    border: 0;
+    border-radius: 8px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+table {
+    border-spacing: 0;
+}
+table td {
+    border: 1px solid #000;
+    padding: 0 10px;
+}
